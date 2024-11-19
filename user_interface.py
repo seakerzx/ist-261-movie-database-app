@@ -8,7 +8,6 @@ class ConsoleUI:
     """
     Creates, destroys, and prints user interface objects to the console.
  
-    
     Attributes:
         header (str): Text that will be displayed in the user interface's Header section (this should not change during runtime).
         title (str): Text that will be displayed in the user interface's Title section.
@@ -43,24 +42,6 @@ class ConsoleUI:
         self.title = title
         self.body = body
         
-    def change_title(self, new_title):
-        """
-        Changes object's title attribute to supplied string.
-
-        Args:
-            new_title (str): Text to change the object's title attribute to.
-        """
-        self.title = new_title
-        
-    def change_body(self, new_body):
-        """
-        Changes object's body attribute to supplied string.
-
-        Args:
-            new_body (str): Text to change the object's body attribute to.
-        """
-        self.body = new_body
-        
     def clear_screen(self):
         """
         Clears the console/terminal of all output.
@@ -71,9 +52,9 @@ class ConsoleUI:
         else:
             os.system('clear')
             
-    def create_screen(self):
+    def print_screen(self):
         """
-        Prints out each section (Header, Title, Body, and Options menu) of the user interface to the console.
+        Prints out each section (Header, Title, Body, and Options menu) of the user interface to the console to create a screen for the user.
         """
         self.clear_screen()
         
@@ -87,9 +68,37 @@ class ConsoleUI:
         print('-' * ConsoleUI.UI_WIDTH, '\n')
         
         # Print Body section
-        print(f'{self.body}\n\n')
+        print(f'{self.body}\n')
         
-        # Print Options menu section
-        # TODO: Create Options functionality and finish this section.
+    def update_screen(self, new_title = None, new_body = None):
+        """
+        Changes title and body attributes to supplied strings (if supplied) and redraws the screen.
         
+        Note: If you need to change the body text only, call this function with object_name.update_screen(new_body='New string here').
+        
+        Args:
+            new_title (str, optional): _Description_: Text to change the object's title attribute to. Defaults to None (Null).
+            new_body (str, optional): _Description_: Text to change the object's body attribute to. Defaults to None (Null).
+        """
+        if new_title is not None:
+            self.title = new_title
+        
+        if new_body is not None:  
+            self.body = new_body
+        
+        self.print_screen()
     
+    # Look into expanding the options menu into its own class with input handling and exception handling in the future.
+    def print_options_menu(self, *available_options):
+        """
+        Prints out an options menu with the supplied options.
+        
+        Args:
+            available_options (tuple): _Description_: Tuple containing options to print out to console.
+        """
+        print('Available Options:')
+        
+        for option in available_options:
+            print(f'    {available_options.index(option) + 1}: {option}')
+            
+        print('\nPlease enter your choice:', end=' ')

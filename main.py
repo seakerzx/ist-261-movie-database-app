@@ -2,7 +2,10 @@
 Program executes here.
 """
 
-from user_interface import ConsoleUI
+import user_interface
 
-ui_main_menu = ConsoleUI()
-ui_main_menu.create_screen()
+if __name__ == '__main__':
+    console_interface = user_interface.ConsoleUI()
+    console_interface.print_screen()
+    
+    console_interface.print_options_menu('Go to Main Menu', 'Import Data from CSV', 'Exit Application')
