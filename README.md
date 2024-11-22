@@ -7,3 +7,9 @@ This application is a program written in Python that is able to create, sort, se
 ## References
 Sample movie information dataset scrapped from IMDb and organized by Daniel Grijalva:<br />
 https://www.kaggle.com/datasets/danielgrijalvas/movies
+
+Python PEP 8 - Style Guide:<br />
+https://peps.python.org/pep-0008/
+
+Google Style Python Docustrings:<br />
+https://gist.github.com/redlotus/3bc387c2591e3e908c9b63b97b11d24e#file-docstrings-py
