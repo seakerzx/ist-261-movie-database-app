@@ -3,6 +3,7 @@ Program executes here.
 """
 
 import user_interface
+import movies
 
 if __name__ == '__main__':
     console_interface = user_interface.ConsoleUI()
