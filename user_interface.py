@@ -19,18 +19,12 @@ class ConsoleUI:
     """
     
     UI_WIDTH = 150
-    """int: Determines how wide (in characters) the user interface is allowed to be."""
+    """int: Determines how wide (in characters) the console user interface is allowed to be."""
 
     HEADER_TEXT = 'Python Movie Database Manager'
     """str: The text to be displayed in the Header section of user interface."""
     
-    STARTUP_TITLE = 'Welcome to the Python Movie Database Manager!'
-    """str: The default text for the Title section to be used if no string is supplied when initializing a new ConsoleUI object."""
-    
-    STARTUP_BODY = 'To start, you can choose to import data from an external CSV file or go straight to the main menu from the Options menu below.'
-    """str: The default text for the Body section to be used if no string is supplied when initializing a new ConsoleUI object."""
-    
-    def __init__(self, title=STARTUP_TITLE, body=STARTUP_BODY):
+    def __init__(self, title, body):
         """
         Initializes new ConsoleUI object.
 
@@ -43,9 +37,7 @@ class ConsoleUI:
         self.body = body
         
     def clear_screen(self):
-        """
-        Clears the console/terminal of all output.
-        """
+        """Clears the console/terminal of all output."""
         # Check to see what operating system is being used and use appropriate clear command.
         if os.name == 'nt':
             os.system('cls')
@@ -53,9 +45,7 @@ class ConsoleUI:
             os.system('clear')
             
     def print_screen(self):
-        """
-        Prints out each section (Header, Title, Body, and Options menu) of the user interface to the console to create a screen for the user.
-        """
+        """Prints out each section (Header, Title, Body, and Options menu) of the user interface to the console to create a screen for the user."""
         self.clear_screen()
         
         # Print Header section
@@ -88,17 +78,62 @@ class ConsoleUI:
         
         self.print_screen()
     
-    # Look into expanding the options menu into its own class with input handling and exception handling in the future.
-    def print_options_menu(self, *available_options):
+    # These fuctions are for collecting user data.
+    # TODO: Have user input be validated by these functions, rather than main.py to keep main.py tidy and readable.
+    # TODO: Expand docstrings for each function.
+    def prompt_options_menu(self, *available_options):
         """
-        Prints out an options menu with the supplied options.
+        Constructs an options menu from the arguments passed through to this function.
         
         Args:
             available_options (tuple): _Description_: Tuple containing options to print out to console.
+            
+        Returns:
+            selected_option (int): _Description_: Tuple containing options to print out to console.
         """
         print('Available Options:')
         
         for option in available_options:
-            print(f'    {available_options.index(option) + 1}: {option}')
+            print(f'   {available_options.index(option) + 1}: {option}')
             
-        print('\nPlease enter your choice:', end=' ')
+        print(f'\nPlease enter your choice (1 - {len(available_options)}):', end=' ')
+
+    def prompt_yes_or_no(self, question):
+        """
+        Constructs a yes-or-no prompt for the user to answer then collects the user's input.
+
+        Args:
+            question (str): _Description_: Question to ask the user.
+
+        Returns:
+            Returns True if the user answers "Yes", returns False if the user enters "No"
+        """
+        user_selection = input(f'{question} (Yes or No): ')
+        
+        if user_selection == 'Yes' or user_selection == 'yes' or user_selection == 'Y' or user_selection == 'y':
+            return True
+        elif user_selection == 'No' or user_selection == 'no' or user_selection == 'N' or user_selection == 'n':
+            return False
+        else:
+            # TODO: Implement actual input validating and reprompt user.
+            print('Not valid. Returning False.')
+            self.prompt_enter_to_continue()
+            return False
+    
+    def prompt_ask_for_string(self):
+        """Prompts the user to enter a string."""
+        #TODO: Implement this
+        pass
+    
+    def prompt_ask_for_number(self):
+        """Prompts the user to enter a number."""
+        #TODO: Implement this
+        pass
+    
+    def prompt_enter_to_continue(self):
+        """Halts application and prompts the user to press their Enter key to continue."""
+        input('Press Enter to continue...')
+
+# If this file is launched as as script, print an error message alerting the user to open the correct file.
+if __name__ == '__main__':
+    print('\nError: File launched as script!\nThe program does not launch from this file!\nPlease execute \'main.py\' in order to launch the Python Movie Database Manager.\n')
