@@ -12,7 +12,7 @@ if __name__ == '__main__':
     console_interface = user_interface.ConsoleUI('Title', 'Body')
     
     # Main program loop starts here.
-    while close_program == False:
+    while close_program is False:
         
         console_interface.update_screen('Main Menu', 'Welcome to the Python Movie Database Manager!')
         console_interface.prompt_options_menu('Add a Movie', 'Update a Movie', 'Search for Movies', 'Import Data from CSV', 'Export Data to CSV', 'Exit Application')

@@ -79,7 +79,8 @@ class ConsoleUI:
         self.print_screen()
     
     # These fuctions are for collecting user data.
-    # TODO: Have user input be handled by these functions, rather than main.py to keep main.py tidy and readable.
+    # TODO: Have user input be validated by these functions, rather than main.py to keep main.py tidy and readable.
+    # TODO: Expand docstrings for each function.
     def prompt_options_menu(self, *available_options):
         """
         Constructs an options menu from the arguments passed through to this function.
