@@ -15,7 +15,6 @@ class ConsoleUI:
         
     Todo:
         * Write more descriptive class description.
-        * Create Options menu functionality
     """
     
     UI_WIDTH = 150
@@ -79,25 +78,46 @@ class ConsoleUI:
         self.print_screen()
     
     # These fuctions are for collecting user data.
-    # TODO: Have user input be validated by these functions, rather than main.py to keep main.py tidy and readable.
-    # TODO: Expand docstrings for each function.
     def prompt_options_menu(self, *available_options):
         """
-        Constructs an options menu from the arguments passed through to this function.
+        Constructs an options menu from the arguments passed through to this function and prompts the user to select one of them.
         
         Args:
             available_options (tuple): _Description_: Tuple containing options to print out to console.
             
+        Raises:
+            ValueError: _Description_: Inappropriate argument value (of correct type).
+            
         Returns:
-            selected_option (int): _Description_: Tuple containing options to print out to console.
+            selected_option (int): _Description_: Integer containing the user's selected option
         """
+        selected_option = 0
+        
         print('Available Options:')
         
         for option in available_options:
             print(f'   {available_options.index(option) + 1}: {option}')
             
         print(f'\nPlease enter your choice (1 - {len(available_options)}):', end=' ')
-
+        
+        while True:
+            try:
+                selected_option = int(input())
+                if selected_option < 0 or selected_option > len(available_options):
+                    raise ValueError
+                else:
+                    return selected_option
+                
+            except ValueError:
+                # TODO: selected_option always prints out 0 here for whatever reason. Fix this so it prints out the actual user's input.
+                print(f'\'{selected_option}\' is not a valid option. A valid option would be a number between 1 and {len(available_options)}, corresponding to the option you would like to choose.')
+                print(f'\nPlease enter your choice (1 - {len(available_options)}):', end = ' ')
+                
+            except:
+                print(f'\nUnknown error occurred. Please try again.')
+                print(f'\nPlease enter your choice (1 - {len(available_options)}):', end = ' ')
+              
+                
     def prompt_yes_or_no(self, question):
         """
         Constructs a yes-or-no prompt for the user to answer then collects the user's input.
@@ -108,27 +128,65 @@ class ConsoleUI:
         Returns:
             Returns True if the user answers "Yes", returns False if the user enters "No"
         """
-        user_selection = input(f'{question} (Yes or No): ')
+        selected_option = input(f'{question} (Yes or No): ')
         
-        if user_selection == 'Yes' or user_selection == 'yes' or user_selection == 'Y' or user_selection == 'y':
-            return True
-        elif user_selection == 'No' or user_selection == 'no' or user_selection == 'N' or user_selection == 'n':
-            return False
-        else:
-            # TODO: Implement actual input validating and reprompt user.
-            print('Not valid. Returning False.')
-            self.prompt_enter_to_continue()
-            return False
+        while True:
+            if selected_option == 'Yes' or selected_option == 'yes' or selected_option == 'Y' or selected_option == 'y':
+                return True
+            elif selected_option == 'No' or selected_option == 'no' or selected_option == 'N' or selected_option == 'n':
+                return False
+            else:
+                print(f'\'{selected_option}\' is not a valid option. Please enter either \'Yes\' or \'No\' (\'Y\' and \'N\' are also acceptable).\n')
+                selected_option = input(f'{question} (Yes or No): ')
+
+
+    def prompt_ask_for_string(self, question):
+        """
+        Prompts the user to respond to a given question and returns that response in a string.
+
+        Args:
+            question (str): _Description_: Question to ask the user.
+
+        Returns:
+            Returns user's response to the prompt in the form of a string.
+        """
+        user_response = input(f'{question}: ')
+        return user_response
     
-    def prompt_ask_for_string(self):
-        """Prompts the user to enter a string."""
-        #TODO: Implement this
-        pass
     
-    def prompt_ask_for_number(self):
-        """Prompts the user to enter a number."""
-        #TODO: Implement this
-        pass
+    def prompt_ask_for_number(self, question, get_float = False):
+        """
+        Prompts the user to enter a number, returns the user's selected number as either a float or an integer.
+        
+        Note: If you want to make sure the number the user enters is returned as a float, set get_float to True when calling this method.
+
+        Args:
+            question (str): _Description_: Question to ask the user.
+            get_float (bool, optional): _Description_: When set to True, this method will attempt to return a float type instead of an integer. Defaults to False.
+            
+        Raises:
+            ValueError: _Description_: Inappropriate argument value (of correct type).
+
+        Returns:
+            Returns user's response to the prompt in the form of either an integer or float depending on if get_float was set to True or False.
+        """
+
+        print(f'{question}:', end = ' ')
+        
+        while True:
+            if get_float:
+                try:
+                    user_response = float(input())
+                    return user_response
+                except:
+                    print('That is not a valid number. Please enter a number:', end = ' ')
+            else:
+                try:
+                    user_response = int(input())
+                    return user_response
+                except:
+                    print('That is not a valid whole number. Please enter a whole number (no decimals):', end = ' ')
+                    
     
     def prompt_enter_to_continue(self):
         """Halts application and prompts the user to press their Enter key to continue."""

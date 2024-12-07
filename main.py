@@ -5,22 +5,23 @@ Program executes here.
 import user_interface
 import movies
 
+# Variable and Class Definitions
+close_program = False
+"""bool: Boolean used to determine when the program should be closed. When False, the program continues to run. When True, program closes."""
+    
+user_selection = -1
+"""int: Integer used to store the user's selected option."""
+
+console_interface = user_interface.ConsoleUI('Title', 'Body')
+"""ConsoleUI: Main instance of ConsoleUI object to control the user interface with."""
+
+# Main program loop starts here.
 if __name__ == '__main__':
-    close_program = False
-    user_selection = -1
     
-    console_interface = user_interface.ConsoleUI('Title', 'Body')
-    
-    # Main program loop starts here.
     while close_program is False:
         
         console_interface.update_screen('Main Menu', 'Welcome to the Python Movie Database Manager!')
-        console_interface.prompt_options_menu('Add a Movie', 'Update a Movie', 'Search for Movies', 'Import Data from CSV', 'Export Data to CSV', 'Exit Application')
-
-        # TODO: Add try-except to make sure user input is acceptable
-        # TODO: Collecting the user input should probably be a function of the ConsoleUI class, look into implementing it there.
-        user_selection = int(input())
-        
+        user_selection = console_interface.prompt_options_menu('Add a Movie', 'Update a Movie', 'Search for Movies', 'Import Data from CSV', 'Export Data to CSV', 'Exit Application')
         # TODO: Finish each branch
         # Add a Movie Branch
         if user_selection == 1:
@@ -58,5 +59,4 @@ if __name__ == '__main__':
             console_interface.update_screen('Error: Invalid Option!', 'You have entered an invalid option.')
             console_interface.prompt_enter_to_continue()
     
-       
     console_interface.update_screen('Good Bye!', 'Thank you for using the Python Movie Database Manager! \nThe application has now been closed.')
